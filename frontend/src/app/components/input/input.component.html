@@ -1,7 +1,7 @@
 <div [formGroup]="formRefference">
     <input type="{{type}}" placeholder="{{placeholder}}" formControlName="{{name}}"
         [ngClass]="showErr ? 'border-red':'' " class="w-full px-5 py-3 text-base bg-transparent border rounded-md outline-none
-                                border-stroke text-text-color focus:border-primary focus-visible:shadow-none" />
+                                border-stroke text-light-text focus:border-primary focus-visible:shadow-none" />
     <span *ngIf="showErr" class="text-red text-left block mt-2">
         {{showErr}}
     </span>

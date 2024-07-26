@@ -28,13 +28,13 @@
                                 class="w-full px-5 py-3 text-base font-medium text-white transition border rounded-md cursor-pointer border-primary bg-primary hover:bg-opacity-90" />
                         </div>
                     </form>
-                    <p class="text-base text-text-color" *ngIf="isLogin">
+                    <p class="text-base text-light-text" *ngIf="isLogin">
                         <span class="pr-0.5">Not a member yet?</span>
                         <a href="javascript:void(0)" (click)="setLogin()" class="text-primary hover:underline">
                             Sign Up
                         </a>
                     </p>
-                    <p class="text-base text-text-color" *ngIf="!isLogin">
+                    <p class="text-base text-light-text" *ngIf="!isLogin">
                         <a href="javascript:void(0)" (click)="setLogin()" class="text-primary hover:underline">
                             Back to Login
                         </a>
