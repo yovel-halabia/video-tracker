@@ -1,0 +1,64 @@
+<section class="min-h-screen bg-gray-1 flex justify-center items-center">
+    <div class="container">
+        <h3 class="text-3xl text-primary-text font-semibold mb-3">{{userName}} Tracks</h3>
+        <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
+            <div class="flex justify-end pb-3">
+                <app-button (onClick)="onNewTrackClicked()" [label]="'New track'" [icon]="'plus'"></app-button>
+            </div>
+            <div *ngIf="tracks.length" class="flex flex-wrap">
+                <table class="w-full table-auto border-separate border-spacing-y-3">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="font-medium text-primary-text text-base w-2/6 min-w-[160px] py-4 px-3  ">
+                                Track
+                            </th>
+                            <th class="font-medium text-primary-text text-base	w-1/6 min-w-[160px] py-4 px-3  ">
+                                Progress
+                            </th>
+                            <th class="font-medium text-primary-text text-base	w-1/12 min-w-[160px] py-4 px-3 ">
+                                Remove
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let track of tracks" class="outline-stroke outline mb-2">
+                            <td (click)="navigateToTrack(track.id)"
+                                class="py-5 px-2 text-center text-base font-medium cursor-pointer">
+                                <div class="flex items-center text-primary-text">
+                                    <div class="w-24 bg-center aspect-video mr-3"
+                                        [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+track.imgUrl+') center'}">
+                                    </div>
+                                    {{track.label}}
+                                </div>
+                            </td>
+                            <td class="py-5 px-2 text-center text-base font-medium">
+                                <div class="w-full">
+                                    <div class="bg-stroke dark:bg-dark-3 relative h-4 w-full rounded-2xl">
+                                        <div [ngClass]="track.progress ? 'w-['+track.progress.toString()+'%]' : ''"
+                                            class="px-2 bg-primary absolute top-0 left-0 flex h-full items-center justify-center rounded-2xl text-xs font-semibold text-white">
+                                            {{track.progress}}%
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td class="py-5 px-2 text-center text-base font-medium ">
+                                <fa-icon class="cursor-pointer" (click)="DeleteTrack(track.id)" [icon]="'trash-can'"
+                                    size="xl" style="color:#637381;"></fa-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="!tracks.length" class="flex flex-wrap justify-center items-center p-24">
+                <p class="text-3xl text-center">You not have any track yet click<br />new track button</p>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</section>
