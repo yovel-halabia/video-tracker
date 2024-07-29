@@ -26,8 +26,4 @@ export class TracksComponent {
 	navigateToTrack(id: number) {
 		//TODO: move to track page
 	}
-
-	onNewTrackClicked(): void {
-		//TODO: move to new track page
-	}
 }

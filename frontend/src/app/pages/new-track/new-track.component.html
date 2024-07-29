@@ -1,0 +1,80 @@
+<section class="min-h-screen bg-gray-1 flex justify-center items-center">
+    <div class="container">
+        <h3 class="text-3xl text-primary-text font-semibold mb-3">New Track</h3>
+        <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
+            <form [formGroup]="newTrackFormGroup" (submit)="onSubmit()" class="px-40">
+                <ol class="space-y-3">
+                    <li class="text-body-color dark:text-dark-6 flex items-center text-base">
+                        <span
+                            class="bg-primary mr-2.5 flex h-[26px] w-full max-w-[26px] items-center justify-center rounded-full text-base text-white">
+                            1
+                        </span>
+                        <app-input [formRefference]="newTrackFormGroup" [name]="'label'" [placeholder]="'Track Name'"
+                            [showErr]="newTrackFormGroup.controls.label.errors && submitted ? newTrackFormGroup.controls.label.errors['required'] ? 'Track Name is required' : newTrackFormGroup.controls.label.errors['nameExist'] && '&quot;' + newTrackFormGroup.controls.label.errors['nameExist'] + '&quot; is already exist' : '' ">
+                        </app-input>
+                    </li>
+                    <li class="text-body-color dark:text-dark-6 flex items-center text-base">
+                        <span
+                            class="bg-primary mr-2.5 flex h-[26px] w-full max-w-[26px] items-center justify-center rounded-full text-base text-white">
+                            2
+                        </span>
+                        <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
+                            <div class="relative" appClickedOutside (clickedOutside)="onClickOutsideSearch()">
+                                <app-input [formRefference]="newTrackFormGroup" [name]="'search'"
+                                    [placeholder]="'Search Video'"
+                                    [showErr]="newTrackFormGroup.controls.search.errors && submitted ? 'You must have at least 1 video' : ''"></app-input>
+                                <table *ngIf="resultsVideos.length"
+                                    class="absolute bg-white w-full table-auto border-separate border-spacing-y-3">
+                                    <tbody>
+                                        <tr *ngFor="let video of resultsVideos" (click)="addVideo(video)"
+                                            class="outline-stroke outline mb-2 bg-white flex justify-between cursor-pointer">
+                                            <td class="py-5 px-2 text-center text-base font-medium">
+                                                <div class="flex items-center text-primary-text">
+                                                    <div class="w-24 bg-center aspect-video mr-3"
+                                                        [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+video.imgUrl+') center'}">
+                                                    </div>
+                                                    {{video.title}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <table class="w-full table-auto border-separate border-spacing-y-3">
+                                <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                                    <tr cdkDrag LockAxis="y" *ngFor="let video of videos"
+                                        class="outline-stroke outline mb-2 bg-white flex justify-between">
+                                        <td class="py-5 px-2 text-center text-base font-medium">
+                                            <div class="flex items-center text-primary-text">
+                                                <div class="w-24 bg-center aspect-video mr-3"
+                                                    [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+video.imgUrl+') center'}">
+                                                </div>
+                                                {{video.title}}
+                                            </div>
+                                        </td>
+                                        <td class="py-5 px-2 text-center text-base font-medium flex items-center">
+                                            <fa-icon (click)="deleteVideo(video.id)" class="cursor-pointer mr-2"
+                                                [icon]="'trash-can'" size="xl" style="color:#637381;"></fa-icon>
+                                            <fa-icon cdkDragHandle class="cursor-grab active:cursor-grabbing"
+                                                [icon]="'grip-lines'" size="xl" style="color:#637381;"></fa-icon>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div *ngIf="!videos.length">
+                                <p class="text-2xl text-center p-5">Search for videos
+                                </p>
+                            </div>
+
+                        </div>
+                    </li>
+                </ol>
+                <div class="flex w-full justify-center pt-8">
+                    <app-button [label]="'Add Track'" [icon]="'plus'" [type]="'submit'" />
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
