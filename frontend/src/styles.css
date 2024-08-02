@@ -4,3 +4,9 @@
 body{
     min-height: 100vh;
 }
+
+youtube-player iframe{
+    width: 100%;
+    height: unset;
+    aspect-ratio: 16 / 9;
+}

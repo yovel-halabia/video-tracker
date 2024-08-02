@@ -22,8 +22,4 @@ export class TracksComponent {
 	DeleteTrack(id: number) {
 		this.trackService.deleteTrack(id);
 	}
-
-	navigateToTrack(id: number) {
-		//TODO: move to track page
-	}
 }

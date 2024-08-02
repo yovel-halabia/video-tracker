@@ -9,6 +9,7 @@ export const user: User = {
 			label: "track1",
 			imgUrl: "https://i.ytimg.com/vi/iVIjckwltkk/mqdefault.jpg",
 			progress: 0,
+			currentVideoIndex: 0,
 			videos: [
 				{
 					id: "iVIjckwltkk",
@@ -18,9 +19,9 @@ export const user: User = {
 					currentTime: 0,
 				},
 				{
-					id: "iVIjckwltkk",
-					title: "Kids At The Zoo: Compilation",
-					imgUrl: "https://i.ytimg.com/vi/iVIjckwltkk/mqdefault.jpg",
+					id: "mVjYG9TSN88",
+					title: "Welcome to Angular’s renaissance — angular.dev",
+					imgUrl: "https://i.ytimg.com/vi/mVjYG9TSN88/maxresdefault.jpg",
 					isDone: false,
 					currentTime: 0,
 				},
@@ -31,6 +32,7 @@ export const user: User = {
 			label: "track2",
 			imgUrl: "https://i.ytimg.com/vi/iVIjckwltkk/mqdefault.jpg",
 			progress: 0,
+			currentVideoIndex: 0,
 			videos: [
 				{
 					id: "iVIjckwltkk",
@@ -40,9 +42,9 @@ export const user: User = {
 					currentTime: 0,
 				},
 				{
-					id: "iVIjckwltkk",
-					title: "Kids At The Zoo: Compilation",
-					imgUrl: "https://i.ytimg.com/vi/iVIjckwltkk/mqdefault.jpg",
+					id: "mVjYG9TSN88",
+					title: "Welcome to Angular’s renaissance — angular.dev",
+					imgUrl: "https://i.ytimg.com/vi/mVjYG9TSN88/maxresdefault.jpg",
 					isDone: false,
 					currentTime: 0,
 				},
@@ -60,9 +62,9 @@ export const videos: Video[] = [
 		currentTime: 0,
 	},
 	{
-		id: "iVIjckwltkk",
-		title: "Kids At The Zoo: Compilation2",
-		imgUrl: "https://i.ytimg.com/vi/iVIjckwltkk/mqdefault.jpg",
+		id: "mVjYG9TSN88",
+		title: "Welcome to Angular’s renaissance — angular.dev",
+		imgUrl: "https://i.ytimg.com/vi/mVjYG9TSN88/maxresdefault.jpg",
 		isDone: false,
 		currentTime: 0,
 	},

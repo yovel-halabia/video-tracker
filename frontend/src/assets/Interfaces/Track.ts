@@ -6,4 +6,5 @@ export default interface Track {
 	progress: number;
 	imgUrl: string;
 	videos: Video[];
+	currentVideoIndex: number;
 }
