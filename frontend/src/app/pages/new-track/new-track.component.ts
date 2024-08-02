@@ -1,9 +1,10 @@
 import {Component} from "@angular/core";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors} from "@angular/forms";
 import {Subscription} from "rxjs";
 import Video from "src/assets/Interfaces/Video";
+import Track from "src/assets/Interfaces/Track";
 import {NewTrackService} from "src/app/services/new-track.service";
 import {TrackService} from "src/app/services/track.service";
 
@@ -13,18 +14,31 @@ import {TrackService} from "src/app/services/track.service";
 	styleUrls: ["./new-track.component.css"],
 })
 export class NewTrackComponent {
-	videos: Video[];
-	videosSubscription: Subscription;
+	videos!: Video[];
+	videosSubscription!: Subscription;
 	resultsVideos: Video[] = [];
-	resultsVideosSubscription: Subscription;
+	resultsVideosSubscription!: Subscription;
 	submitted: boolean = false;
+	editTrack: Track | undefined;
 
 	newTrackFormGroup = new FormGroup({
 		label: new FormControl("", [Validators.required, this.validateLabel()]),
 		search: new FormControl("", this.validateSearch()),
 	});
 
-	constructor(private newTrackService: NewTrackService, private trackService: TrackService, private router: Router) {
+	constructor(private newTrackService: NewTrackService, private trackService: TrackService, activeroute: ActivatedRoute, private router: Router) {
+		if (activeroute.routeConfig?.path?.includes("edit-track")) {
+			const matchTrack: Track | undefined = trackService.tracks.find((t) => t.id === Number(activeroute.snapshot.params["id"]));
+			if (!matchTrack) {
+				router.navigate(["/tracks"]);
+				return;
+			}
+
+			this.editTrack = matchTrack;
+			this.newTrackFormGroup.controls["label"].setValue(matchTrack.label);
+			this.newTrackService.addVideo(matchTrack.videos);
+		}
+
 		this.videos = newTrackService.videos;
 		this.videosSubscription = this.newTrackService.getVideos().subscribe((v) => (this.videos = v));
 		this.resultsVideos = newTrackService.resultsVideos;
@@ -41,8 +55,8 @@ export class NewTrackComponent {
 
 	validateLabel(): ValidatorFn {
 		return (control: AbstractControl): ValidationErrors | null => {
-			const forbidden = this.trackService.tracks.filter((t) => t.label === control.value);
-			return forbidden.length ? {nameExist: forbidden[0].label} : null;
+			const forbidden = this.trackService.tracks.filter((t) => t.label === control.value)[0]?.label;
+			return forbidden && forbidden !== this.editTrack?.label ? {nameExist: forbidden} : null;
 		};
 	}
 
@@ -57,7 +71,7 @@ export class NewTrackComponent {
 	}
 
 	addVideo(video: Video) {
-		this.newTrackService.addVideo(video);
+		this.newTrackService.addVideo([video]);
 		this.newTrackFormGroup.controls["search"].setValue("");
 	}
 
@@ -69,6 +83,13 @@ export class NewTrackComponent {
 	onSubmit() {
 		this.submitted = true;
 		if (!this.newTrackFormGroup.valid) return;
+		if (this.editTrack) {
+			this.trackService.updateTrack({...this.editTrack, label: this.newTrackFormGroup.controls.label.value || "", videos: this.videos});
+			this.router.navigate(["/track/" + this.editTrack.id]);
+			this.trackService.calcTrackProgress(this.editTrack.id);
+			this.newTrackService.init();
+			return;
+		}
 		this.trackService.addTrack({
 			label: this.newTrackFormGroup.controls.label.value || "",
 			videos: this.videos,

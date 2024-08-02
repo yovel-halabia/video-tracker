@@ -35,8 +35,8 @@ export class NewTrackService {
 		this.resultsVideosSubject.next(this.resultsVideos);
 	}
 
-	addVideo(video: Video) {
-		this.videos.push(video);
+	addVideo(video: Video[]) {
+		this.videos.push(...video);
 		this.videosSubject.next(this.videos);
 		this.searchForVideo();
 	}

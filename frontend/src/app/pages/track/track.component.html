@@ -2,7 +2,7 @@
     <div class="container">
         <h3 class="text-3xl text-primary-text font-semibold mb-3">{{track.label}}</h3>
         <div class="flex justify-end pb-3">
-            <app-button [link]="'/edit-track'" [label]="'edit track'" [icon]="'pen'"></app-button>
+            <app-button [link]="'/edit-track/'+track.id" [label]="'edit track'" [icon]="'pen'"></app-button>
         </div>
         <div
             class="container h-[50vh] mx-auto rounded-md bg-white border-stroke border p-3 flex gap-x-5 direction-column">
