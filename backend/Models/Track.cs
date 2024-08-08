@@ -13,8 +13,7 @@ namespace backend.Models
         public string ImgUrl { get; set; } = String.Empty;
         public int CurrentVideoIndex { get; set; } = 0;
         public List<Video> Videos { get; set; } = new List<Video>();
-
-        public int? UserId { get; set; }
-        public User? User { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }
