@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
+using backend.Mappers;
 
 
 namespace backend.Controllers
@@ -22,11 +23,13 @@ namespace backend.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
+        private readonly IUserService _userService;
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _userService = userService;
         }
 
         [HttpPost("register")]
@@ -47,11 +50,9 @@ namespace backend.Controllers
                 if (createUser.Succeeded)
                 {
                     var addRole = await _userManager.AddToRoleAsync(user, "User");
-                    if (addRole.Succeeded) return Ok(new UserDto
+                    if (addRole.Succeeded) return Ok(new NewUserDto
                     {
                         UserName = user.UserName,
-                        Email = user.Email,
-                        Tracks = user.Tracks,
                         Token = _tokenService.CreateToken(user)
                     });
                     return StatusCode(500);
@@ -69,8 +70,8 @@ namespace backend.Controllers
 
         }
 
-        [HttpPost("signin")]
-        public async Task<IActionResult> SignIn(LoginDto loginDto)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
             try
             {
@@ -85,11 +86,10 @@ namespace backend.Controllers
 
                 if (!result.Succeeded) return Unauthorized(new List<string>(["You have entered an invalid username or password"]));
 
-                return Ok(new UserDto
+                return Ok(new LoginUserDto
                 {
                     UserName = user.UserName,
-                    Email = user.Email,
-                    Tracks = user.Tracks,
+                    Tracks = user.Tracks.Select(t => t.ToTrackDto()).ToList(),
                     Token = _tokenService.CreateToken(user)
                 });
 
@@ -109,25 +109,14 @@ namespace backend.Controllers
             {
 
                 var accessToken = Request.Cookies["accessToken"];
-
-                if (accessToken == null) return Unauthorized();
-
-                if (!_tokenService.IsValidToken(accessToken))
-                {
-                    HttpContext.Response.Cookies.Delete("AccessToken");
-                    return Unauthorized();
-                }
-
-                var userEmail = _tokenService.DecodeToken(accessToken).Email;
-                User user = await _userManager.FindByEmailAsync(userEmail);
+                User user = await _userService.GetAsync(accessToken);
                 if (user == null) return Unauthorized();
+
                 await _signInManager.SignInAsync(user, true);
                 return Ok(new UserDto
                 {
                     UserName = user.UserName,
-                    Email = user.Email,
-                    Tracks = user.Tracks,
-
+                    Tracks = user.Tracks.Select(t => t.ToTrackDto()).ToList(),
                 });
             }
             catch
@@ -136,9 +125,9 @@ namespace backend.Controllers
             }
         }
 
-
-        [HttpGet("signout")]
-        public async Task<IActionResult> SignOut()
+        [HttpGet("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
             try
             {

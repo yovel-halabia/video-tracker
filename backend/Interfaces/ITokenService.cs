@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using backend.Dtos.User;
+using backend.Dtos.Token;
 using backend.Models;
 
 namespace backend.Interfaces
@@ -13,6 +13,6 @@ namespace backend.Interfaces
 
         bool IsValidToken(string token);
 
-        UserDto DecodeToken(string token);
+        DecodedTokenDto DecodeToken(string token);
     }
 }

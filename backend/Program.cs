@@ -1,6 +1,7 @@
 using backend.Data;
 using backend.Interfaces;
 using backend.Models;
+using backend.Repository;
 using backend.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -78,6 +79,7 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

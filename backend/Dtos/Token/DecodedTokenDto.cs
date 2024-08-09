@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using backend.Dtos.Track;
-using backend.Models;
 
-namespace backend.Dtos.User
+namespace backend.Dtos.Token
 {
-    public class UserDto
+    public class DecodedTokenDto
     {
         [Required]
         public string UserName { get; set; }
         [Required]
-        public List<TrackDto> Tracks { get; set; }
-
+        public string Email { get; set; }
     }
 }

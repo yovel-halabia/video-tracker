@@ -5,11 +5,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using backend.Dtos.User;
+using backend.Dtos.Token;
 using backend.Interfaces;
 using backend.Models;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Any;
 
 namespace backend.Service
 {
@@ -76,15 +75,15 @@ namespace backend.Service
         }
 
 
-        public UserDto DecodeToken(string token)
+        public DecodedTokenDto DecodeToken(string token)
         {
             var decodedToken = _tokenHandler.ReadToken(token) as JwtSecurityToken;
             var userName = decodedToken.Claims.First(claim => claim.Type == "given_name").Value;
             var email = decodedToken.Claims.First(claim => claim.Type == "email").Value;
 
-            if (userName == null || email == null) return new UserDto();
+            if (userName == null || email == null) return new DecodedTokenDto();
 
-            return new UserDto()
+            return new DecodedTokenDto()
             {
                 UserName = userName,
                 Email = email,

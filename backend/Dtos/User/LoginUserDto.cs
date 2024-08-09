@@ -8,12 +8,14 @@ using backend.Models;
 
 namespace backend.Dtos.User
 {
-    public class UserDto
+    public class LoginUserDto
     {
         [Required]
         public string UserName { get; set; }
         [Required]
         public List<TrackDto> Tracks { get; set; }
+        [Required]
+        public string Token { get; set; } = string.Empty;
 
     }
 }
