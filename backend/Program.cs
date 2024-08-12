@@ -78,6 +78,8 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+builder.Services.AddCors(options => options.AddPolicy(name: "ClientPolicy", policy => policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ITrackRepository, TrackRepository>();
@@ -90,6 +92,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("ClientPolicy");
 
 app.UseHttpsRedirection();
 
