@@ -51,7 +51,7 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e6d7f388-58fe-445c-9d24-e6e9a6638707",
+                            Id = "ae3cc3dd-e756-4e2a-82e3-13854e5f26b1",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -283,8 +283,12 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TrackId")
+                    b.Property<int>("TrackId")
                         .HasColumnType("int");
+
+                    b.Property<string>("VideoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -359,7 +363,9 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Models.Track", "Track")
                         .WithMany("Videos")
-                        .HasForeignKey("TrackId");
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Track");
                 });

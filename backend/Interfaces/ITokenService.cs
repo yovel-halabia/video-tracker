@@ -11,8 +11,6 @@ namespace backend.Interfaces
     {
         string CreateToken(User user);
 
-        bool IsValidToken(string token);
-
         DecodedTokenDto DecodeToken(string token);
     }
 }

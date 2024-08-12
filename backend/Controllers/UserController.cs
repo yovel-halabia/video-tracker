@@ -23,13 +23,11 @@ namespace backend.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
-        private readonly IUserService _userService;
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IUserService userService)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
-            _userService = userService;
         }
 
         [HttpPost("register")]
@@ -38,15 +36,12 @@ namespace backend.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-
                 var user = new User
                 {
                     UserName = registerDto.UserName,
                     Email = registerDto.Email,
                 };
-
                 var createUser = await _userManager.CreateAsync(user, registerDto.Password);
-
                 if (createUser.Succeeded)
                 {
                     var addRole = await _userManager.AddToRoleAsync(user, "User");
@@ -58,7 +53,6 @@ namespace backend.Controllers
                     return StatusCode(500);
 
                 }
-
                 return Unauthorized(createUser.Errors.Select(e => e.Description).ToArray());
 
 
@@ -78,14 +72,10 @@ namespace backend.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
-
+                User user = await _userManager.Users.Where(u => u.Email == loginDto.Email).Include(u => u.Tracks).ThenInclude(t => t.Videos).FirstOrDefaultAsync();
                 if (user == null) return Unauthorized(new List<string>(["You have entered an invalid username or password"]));
-
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
                 if (!result.Succeeded) return Unauthorized(new List<string>(["You have entered an invalid username or password"]));
-
                 return Ok(new LoginUserDto
                 {
                     UserName = user.UserName,
@@ -109,9 +99,10 @@ namespace backend.Controllers
             {
 
                 var accessToken = Request.Cookies["accessToken"];
-                User user = await _userService.GetAsync(accessToken);
+                var decodedToken = _tokenService.DecodeToken(accessToken);
+                if (decodedToken == null) return Unauthorized();
+                User user = await _userManager.Users.Where(u => u.Email == decodedToken.Email).Include(u => u.Tracks).ThenInclude(t => t.Videos).FirstOrDefaultAsync();
                 if (user == null) return Unauthorized();
-
                 await _signInManager.SignInAsync(user, true);
                 return Ok(new UserDto
                 {

@@ -49,14 +49,11 @@ namespace backend.Service
             return _tokenHandler.WriteToken(token);
         }
 
-
-        public bool IsValidToken(string token)
+        public DecodedTokenDto DecodeToken(string token)
         {
             try
             {
-                if (token == null) return false;
-
-                _tokenHandler.ValidateToken(token, new TokenValidationParameters
+                _tokenHandler.ValidateToken(token.Replace("Bearer ", ""), new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = _key,
@@ -65,29 +62,22 @@ namespace backend.Service
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
-                return true;
+                var decodedToken = _tokenHandler.ReadToken(token.Replace("Bearer ", "")) as JwtSecurityToken;
+                var userName = decodedToken.Claims.First(claim => claim.Type == "given_name").Value;
+                var email = decodedToken.Claims.First(claim => claim.Type == "email").Value;
 
+                if (userName == null || email == null) return null;
+
+                return new DecodedTokenDto()
+                {
+                    UserName = userName,
+                    Email = email,
+                };
             }
             catch
             {
-                return false;
+                return null;
             }
-        }
-
-
-        public DecodedTokenDto DecodeToken(string token)
-        {
-            var decodedToken = _tokenHandler.ReadToken(token) as JwtSecurityToken;
-            var userName = decodedToken.Claims.First(claim => claim.Type == "given_name").Value;
-            var email = decodedToken.Claims.First(claim => claim.Type == "email").Value;
-
-            if (userName == null || email == null) return new DecodedTokenDto();
-
-            return new DecodedTokenDto()
-            {
-                UserName = userName,
-                Email = email,
-            };
         }
     }
 }

@@ -24,9 +24,9 @@ namespace backend.Service
         {
             try
             {
-                if (!_tokenService.IsValidToken(token)) return null;
-                var userEmail = _tokenService.DecodeToken(token).Email;
-                User user = await _userManager.FindByEmailAsync(userEmail);
+                var decodedToken = _tokenService.DecodeToken(token);
+                if (decodedToken == null) return null;
+                User user = await _userManager.FindByEmailAsync(decodedToken.Email);
                 return user;
             }
             catch

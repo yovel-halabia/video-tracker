@@ -18,7 +18,7 @@ namespace backend.Mappers
                 Progress = trackModel.Progress,
                 ImgUrl = trackModel.ImgUrl,
                 CurrentVideoIndex = trackModel.CurrentVideoIndex,
-                Videos = trackModel.Videos,
+                Videos = trackModel.Videos.Select(v => v.ToVideoDto()).ToList(),
             };
         }
 
