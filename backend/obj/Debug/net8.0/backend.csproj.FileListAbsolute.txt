@@ -143,3 +143,9 @@
 /Users/yovelhalabia/Desktop/projects/video-tracker/backend/obj/Debug/net8.0/backend.pdb
 /Users/yovelhalabia/Desktop/projects/video-tracker/backend/obj/Debug/net8.0/backend.genruntimeconfig.cache
 /Users/yovelhalabia/Desktop/projects/video-tracker/backend/obj/Debug/net8.0/ref/backend.dll
+/Users/yovelhalabia/Desktop/projects/video-tracker/backend/bin/Debug/net8.0/Google.Apis.dll
+/Users/yovelhalabia/Desktop/projects/video-tracker/backend/bin/Debug/net8.0/Google.Apis.Auth.dll
+/Users/yovelhalabia/Desktop/projects/video-tracker/backend/bin/Debug/net8.0/Google.Apis.Core.dll
+/Users/yovelhalabia/Desktop/projects/video-tracker/backend/bin/Debug/net8.0/Google.Apis.YouTube.v3.dll
+/Users/yovelhalabia/Desktop/projects/video-tracker/backend/bin/Debug/net8.0/System.Management.dll
+/Users/yovelhalabia/Desktop/projects/video-tracker/backend/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Management.dll
