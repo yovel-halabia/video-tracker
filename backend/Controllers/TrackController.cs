@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Dtos.Track;
+using backend.Dtos.Video;
 using backend.Interfaces;
 using backend.Mappers;
 using backend.Models;
@@ -65,13 +66,33 @@ namespace backend.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest(new { errors = ModelState });
-                if (!trackToEditDto.Videos.IsValidVideoList()) return BadRequest(new { errors = new List<string> { "Video url must be unique for track" } });
+                if (trackToEditDto.Videos.Count > 0 && !trackToEditDto.Videos.IsValidVideoList()) return BadRequest(new { errors = new List<string> { "Video url must be unique for track" } });
                 var AccessToken = HttpContext.Request.Headers.First(h => h.Key == "Authorization").Value;
                 User user = await _userService.GetAsync(AccessToken);
                 if (user == null) return Unauthorized();
                 var result = await _trackRepo.UpdateAsync(trackToEditDto, user.Id);
                 if (result != null) return Ok();
                 return BadRequest(new { errors = new List<string> { "Invalid TrackId" } });
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("edit-video")]
+        public async Task<IActionResult> EditVideo([FromBody] VideoToEditDto videoToEditDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(new { errors = ModelState });
+                var AccessToken = HttpContext.Request.Headers.First(h => h.Key == "Authorization").Value;
+                User user = await _userService.GetAsync(AccessToken);
+                if (user == null) return Unauthorized();
+                var result = await _trackRepo.UpdateVideoAsync(videoToEditDto, user.Id);
+                if (result != null) return Ok();
+                return BadRequest(new { errors = new List<string> { "Invalid TrackId/Video Url" } });
             }
             catch
             {

@@ -44,13 +44,33 @@ namespace backend.Repository
 
                 if (existingTrack == null) return null;
 
-                if (!string.IsNullOrWhiteSpace(trackToEditDto.Label)) existingTrack.Label = trackToEditDto.Label;
-                if (trackToEditDto.Progress != -1) existingTrack.Progress = trackToEditDto.Progress;
-                if (!string.IsNullOrWhiteSpace(trackToEditDto.ImgUrl)) existingTrack.ImgUrl = trackToEditDto.ImgUrl;
-                if (trackToEditDto.CurrentVideoIndex != -1) existingTrack.CurrentVideoIndex = trackToEditDto.CurrentVideoIndex;
-                if (trackToEditDto.Videos.Count > 0) existingTrack.Videos = trackToEditDto.Videos.Select(v => v.FromVideoDto(existingTrack)).ToList();
+                if (trackToEditDto.Label != null) existingTrack.Label = trackToEditDto.Label;
+                if (trackToEditDto.Progress != null) existingTrack.Progress = (int)trackToEditDto.Progress;
+                if (trackToEditDto.ImgUrl != null) existingTrack.ImgUrl = trackToEditDto.ImgUrl;
+                if (trackToEditDto.CurrentVideoIndex != null) existingTrack.CurrentVideoIndex = (int)trackToEditDto.CurrentVideoIndex;
+                if (trackToEditDto.Videos != null) existingTrack.Videos = trackToEditDto.Videos.Select(v => v.FromVideoDto(existingTrack)).ToList();
                 await _context.SaveChangesAsync();
                 return trackToEditDto;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public async Task<VideoToEditDto> UpdateVideoAsync(VideoToEditDto videoToEditDto, string userId)
+        {
+            try
+            {
+                var existingTrack = await _context.Tracks.Where(t => t.UserId == userId && t.Id == videoToEditDto.TrackId).Include(c => c.Videos).FirstOrDefaultAsync();
+                var existingVideo = existingTrack.Videos.Find(v => v.VideoUrl == videoToEditDto.VideoUrl);
+
+                if (existingVideo == null) return null;
+
+                if (videoToEditDto.IsDone != null) existingVideo.IsDone = (bool)videoToEditDto.IsDone;
+                if (videoToEditDto.CurrentTime != null) existingVideo.CurrentTime = (int)videoToEditDto.CurrentTime;
+
+                await _context.SaveChangesAsync();
+                return videoToEditDto;
             }
             catch
             {

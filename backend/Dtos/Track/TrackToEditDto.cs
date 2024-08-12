@@ -11,10 +11,10 @@ namespace backend.Dtos.Track
     {
         [Required]
         public int Id { get; set; }
-        public string Label { get; set; } = String.Empty;
-        public int Progress { get; set; } = -1;
-        public string ImgUrl { get; set; } = String.Empty;
-        public int CurrentVideoIndex { get; set; } = -1;
+        public string? Label { get; set; }
+        public int? Progress { get; set; }
+        public string? ImgUrl { get; set; }
+        public int? CurrentVideoIndex { get; set; }
         public List<VideoDto> Videos { get; set; } = new List<VideoDto>();
     }
 }
