@@ -78,7 +78,7 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
-builder.Services.AddCors(options => options.AddPolicy(name: "ClientPolicy", policy => policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
+builder.Services.AddCors(options => options.AddPolicy(name: "ClientPolicy", policy => policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();

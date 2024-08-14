@@ -13,7 +13,7 @@ namespace backend.Dtos.User
         [Required]
         public string UserName { get; set; }
         [Required]
-        public List<TrackDto> Tracks { get; set; }
+        public List<TrackDto> Tracks { get; set; } = new List<TrackDto>();
 
     }
 }

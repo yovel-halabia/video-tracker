@@ -1,0 +1,18 @@
+<div *ngIf="open" [@openClose]="open ? 'open' : 'close'"
+    class="border-red bg-red-light flex fixed right-1/2 translate-x-1/2 w-[75%] rounded-lg border-l-[6px] px-7 py-8 shadow-[0px_2px_10px_0px_rgba(0,0,0,0.08)] md:p-9">
+    <div class="bg-red mr-5 flex h-[34px] w-full max-w-[34px] items-center justify-center rounded-lg">
+        <fa-icon [icon]="'xmark'" style="color:white"></fa-icon>
+    </div>
+    <div class="w-full">
+        <h5 class="mb-3 text-base font-semibold text-[#BC1C21]">
+            {{data.title ? data.title : "were "+data.content.length+" errors with your submission"}}
+        </h5>
+        <ul *ngIf="data.content.length > 1" class="list-inside list-disc">
+            <li *ngFor="let text of data.content" class="text-red-medium text-base leading-relaxed">
+                {{text}}
+            </li>
+        </ul>
+        <span *ngIf="data.content.length === 1"
+            class="text-red-medium text-base leading-relaxed">{{data.content.join("")}}</span>
+    </div>
+</div>

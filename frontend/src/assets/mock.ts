@@ -1,7 +1,6 @@
 import User from "./Interfaces/User";
 import Video from "./Interfaces/Video";
 export const user: User = {
-	id: 1,
 	userName: "my user",
 	tracks: [
 		{

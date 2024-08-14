@@ -45,15 +45,14 @@ namespace backend.Controllers
                 if (createUser.Succeeded)
                 {
                     var addRole = await _userManager.AddToRoleAsync(user, "User");
-                    if (addRole.Succeeded) return Ok(new NewUserDto
+                    if (addRole.Succeeded) return Ok(new UserDto
                     {
                         UserName = user.UserName,
-                        Token = _tokenService.CreateToken(user)
                     });
                     return StatusCode(500);
 
                 }
-                return Unauthorized(createUser.Errors.Select(e => e.Description).ToArray());
+                return BadRequest(createUser.Errors.Select(e => e.Description).ToArray());
 
 
             }
@@ -76,11 +75,11 @@ namespace backend.Controllers
                 if (user == null) return Unauthorized(new List<string>(["You have entered an invalid username or password"]));
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
                 if (!result.Succeeded) return Unauthorized(new List<string>(["You have entered an invalid username or password"]));
-                return Ok(new LoginUserDto
+                HttpContext.Response.Cookies.Append("accessToken", _tokenService.CreateToken(user));
+                return Ok(new UserDto
                 {
                     UserName = user.UserName,
                     Tracks = user.Tracks.Select(t => t.ToTrackDto()).ToList(),
-                    Token = _tokenService.CreateToken(user)
                 });
 
 
@@ -100,9 +99,17 @@ namespace backend.Controllers
 
                 var accessToken = Request.Cookies["accessToken"];
                 var decodedToken = _tokenService.DecodeToken(accessToken);
-                if (decodedToken == null) return Unauthorized();
+                if (decodedToken == null)
+                {
+                    HttpContext.Response.Cookies.Delete("accessToken");
+                    return Unauthorized();
+                }
                 User user = await _userManager.Users.Where(u => u.Email == decodedToken.Email).Include(u => u.Tracks).ThenInclude(t => t.Videos).FirstOrDefaultAsync();
-                if (user == null) return Unauthorized();
+                if (user == null)
+                {
+                    HttpContext.Response.Cookies.Delete("accessToken");
+                    return Unauthorized();
+                }
                 await _signInManager.SignInAsync(user, true);
                 return Ok(new UserDto
                 {
@@ -112,12 +119,12 @@ namespace backend.Controllers
             }
             catch
             {
-                return StatusCode(500);
+                HttpContext.Response.Cookies.Delete("accessToken");
+                return Unauthorized();
             }
         }
 
         [HttpGet("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
             try
@@ -125,7 +132,7 @@ namespace backend.Controllers
                 await _signInManager.SignOutAsync();
                 if (Request.Cookies["accessToken"] != null)
                 {
-                    HttpContext.Response.Cookies.Delete("AccessToken");
+                    HttpContext.Response.Cookies.Delete("accessToken");
                 }
                 return Ok(new List<string>(["User logged out"]));
             }

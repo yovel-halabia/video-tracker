@@ -9,8 +9,8 @@
                     </div>
                     <form (submit)="onSubmit()" [formGroup]="loginFormGroup">
                         <div class="mb-6" *ngIf="!isLogin">
-                            <app-input [formRefference]="loginFormGroup" [name]="'fullName'" [placeholder]="'Full Name'"
-                                [showErr]="loginFormGroup.controls.fullName.errors && submitted ? loginFormGroup.controls.fullName.errors['required'] && 'Full Name field is required': '' ">
+                            <app-input [formRefference]="loginFormGroup" [name]="'userName'" [placeholder]="'Full Name'"
+                                [showErr]="loginFormGroup.controls.userName.errors && submitted ? loginFormGroup.controls.userName.errors['required'] && 'Full Name field is required': '' ">
                             </app-input>
                         </div>
                         <div class="mb-6">
@@ -23,6 +23,9 @@
                                 [showErr]="loginFormGroup.controls.password.errors && submitted ? loginFormGroup.controls.password.errors['required'] ? 'Password field is required': loginFormGroup.controls.password.errors['minlength'] && 'Passwrod length should be at least 8 characters' : ''">
                             </app-input>
                         </div>
+                        <span *ngIf="errMssg" class="text-red text-left block mb-3" [innerHTML]="errMssg">
+                        
+                        </span>
                         <div class="mb-10">
                             <input type="submit" value="Sign In"
                                 class="w-full px-5 py-3 text-base font-medium text-white transition border rounded-md cursor-pointer border-primary bg-primary hover:bg-opacity-90" />

@@ -1,6 +1,16 @@
 <section class="min-h-screen bg-gray-1 flex justify-center items-center">
     <div class="container">
         <h3 class="text-3xl text-primary-text font-semibold mb-3">{{userName}} Tracks</h3>
+        <div class="pl-3 relative">
+            <fa-icon (click)="setShowMore()" [icon]="'ellipsis'" size="2x" class="cursor-pointer"></fa-icon>
+            <div *ngIf="showMore" class="rounded-md bg-white border-stroke border p-3 absolute mt-[-8px]">
+                <div (click)="logOut()" class="cursor-pointer">
+                    <fa-icon [icon]="'sign-out'"></fa-icon>
+                    <span class="ml-2">Log Out</span>
+                </div>
+        
+            </div>
+        </div>
         <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
             <div class="flex justify-end pb-3">
                 <app-button [link]="'/new-track'" [label]="'New track'" [icon]="'plus'"></app-button>
