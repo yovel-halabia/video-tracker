@@ -48,7 +48,7 @@ namespace backend.Repository
                 if (trackToEditDto.Progress != null) existingTrack.Progress = (int)trackToEditDto.Progress;
                 if (trackToEditDto.ImgUrl != null) existingTrack.ImgUrl = trackToEditDto.ImgUrl;
                 if (trackToEditDto.CurrentVideoIndex != null) existingTrack.CurrentVideoIndex = (int)trackToEditDto.CurrentVideoIndex;
-                if (trackToEditDto.Videos != null) existingTrack.Videos = trackToEditDto.Videos.Select(v => v.FromVideoDto(existingTrack)).ToList();
+                if (trackToEditDto.Videos.Count > 0) existingTrack.Videos = trackToEditDto.Videos.Select(v => v.FromVideoDto(existingTrack)).ToList();
                 await _context.SaveChangesAsync();
                 return trackToEditDto;
             }

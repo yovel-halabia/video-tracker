@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {Router, ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
 import {TrackService} from "src/app/services/track.service";
 import Track from "src/assets/Interfaces/Track";
 
@@ -10,55 +9,54 @@ import Track from "src/assets/Interfaces/Track";
 })
 export class TrackComponent {
 	track!: Track;
-	subscription!: Subscription;
 	interval!: number;
 
-	constructor(private trackService: TrackService, activeroute: ActivatedRoute, private router: Router) {
-		const matchTrack: Track | undefined = trackService.tracks.find((t) => t.id === Number(activeroute.snapshot.params["id"]));
+	constructor(private trackService: TrackService, private activeroute: ActivatedRoute, private router: Router) {
+		const id = Number(this.activeroute.snapshot.params["id"]);
+		const matchTrack = trackService.tracks.find((t) => t.id === id);
 		if (!matchTrack) {
-			router.navigate(["/tracks"]);
+			this.router.navigate(["/tracks"]);
 			return;
 		}
 		this.track = matchTrack;
-		this.subscription = this.trackService.getTracks().subscribe((v) => {
-			this.track = v.find((t: any) => t.id === Number(activeroute.snapshot.params["id"]));
+		this.trackService.subject.subscribe((v) => {
+			const matchTrack = v.find((t) => t.id === this.track.id);
+			if (!matchTrack) return;
+			this.track = matchTrack;
 		});
 	}
 
-	moveToVideo(videoId: string) {
-		const videoIndex: number | undefined = this.track.videos.findIndex((v: any) => v.id === videoId);
-		if (videoIndex === undefined) return;
-		this.track = {...this.track, currentVideoIndex: videoIndex};
-		this.trackService.updateTrack(this.track);
+	moveToVideo(videoUrl: string) {
+		const currentVideoIndex = this.track.videos.findIndex((v) => v.videoUrl === videoUrl);
+		if (currentVideoIndex === this.track.currentVideoIndex) return;
+		this.trackService.updateTrack({id: this.track.id, currentVideoIndex}).subscribe();
 	}
 
 	onVideoStateChange(e: any) {
-		const videoIndex: number | undefined = this.track.videos.findIndex((v: any) => v.id === e.target.videoId);
+		const videoUrl = e.target.videoId;
+		const videoIndex = this.track.videos.findIndex((v) => v.videoUrl === videoUrl);
 		if (videoIndex === undefined) return;
 
 		switch (e.data) {
 			case 0: {
 				//video finished
-				this.track.videos[videoIndex] = {...this.track.videos[videoIndex], isDone: true, currentTime: 0};
-				if (this.track.videos[videoIndex + 1]) this.track = {...this.track, currentVideoIndex: videoIndex + 1};
-				this.trackService.updateTrack(this.track);
-				this.trackService.calcTrackProgress(this.track.id);
+				if (this.interval) clearInterval(this.interval);
+				this.trackService.updateVideo({trackId: this.track.id, videoUrl, isDone: true, currentTime: 0}).subscribe();
+				if (this.track.videos[videoIndex + 1]) this.trackService.updateTrack({id: this.track.id, currentVideoIndex: videoIndex + 1}).subscribe();
 				break;
 			}
 			case 1: {
 				//video started
 				if (this.interval) clearInterval(this.interval);
 				this.interval = window.setInterval(() => {
-					this.track.videos[videoIndex] = {...this.track.videos[videoIndex], currentTime: e.target.getCurrentTime()};
-					this.trackService.updateTrack(this.track);
+					this.trackService.updateVideo({trackId: this.track.id, videoUrl, currentTime: Math.ceil(e.target.getCurrentTime())}).subscribe();
 				}, 5000);
 				break;
 			}
 			case 2: {
 				//video stoped
 				if (this.interval) clearInterval(this.interval);
-				this.track.videos[videoIndex] = {...this.track.videos[videoIndex], currentTime: e.target.getCurrentTime()};
-				this.trackService.updateTrack(this.track);
+				this.trackService.updateVideo({trackId: this.track.id, videoUrl, currentTime: Math.ceil(e.target.getCurrentTime())}).subscribe();
 				break;
 			}
 

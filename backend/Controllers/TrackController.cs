@@ -50,7 +50,7 @@ namespace backend.Controllers
                 };
                 track.Videos = trackToAddDto.Videos.Select(v => v.FromVideoDto(track)).ToList();
                 var result = await _trackRepo.CreateAsync(track);
-                if (result != null) return Ok(new { trackId = result.Id });
+                if (result != null) return Ok(result.Id);
                 return StatusCode(500);
             }
             catch
@@ -101,8 +101,8 @@ namespace backend.Controllers
         }
 
         [Authorize]
-        [HttpPost("delete")]
-        public async Task<IActionResult> DeleteTrack([FromBody] int trackId)
+        [HttpGet("delete/{trackId}")]
+        public async Task<IActionResult> DeleteTrack(int trackId)
         {
             try
             {

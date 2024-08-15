@@ -9,7 +9,7 @@
             <div class="flex-1 h-fit">
                 <youtube-player (stateChange)="onVideoStateChange($event)"
                     [startSeconds]="track ? track.videos[track.currentVideoIndex].currentTime : 0"
-                    [videoId]=" track ? track.videos[track.currentVideoIndex].id : ''" />
+                    [videoId]=" track ? track.videos[track.currentVideoIndex].videoUrl : ''" />
                 <span class="block text-center text-primary-text text-base text-xl mt-2">{{track ?
                     track.videos[track.currentVideoIndex].title : ''}}</span>
             </div>
@@ -23,7 +23,7 @@
 
                 <div class="w-full shadow-md rounded-md flex-1 overflow-hidden mt-3">
                     <div class="h-full p-5 overflow-y-auto">
-                        <div *ngFor="let video of track?.videos" (click)="moveToVideo(video.id)"
+                        <div *ngFor="let video of track?.videos" (click)="moveToVideo(video.videoUrl)"
                             class="border-stroke border mb-2 p-3 bg-white flex items-center justify-between cursor-pointer">
                             <div class="flex items-center">
                                 <div class="w-24 bg-center aspect-video mr-3"

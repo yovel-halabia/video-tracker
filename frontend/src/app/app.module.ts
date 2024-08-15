@@ -7,7 +7,6 @@ import {YouTubePlayerModule} from "@angular/youtube-player";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CookieService} from "ngx-cookie-service";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
@@ -42,7 +41,7 @@ import {AlertComponent} from "./components/alert/alert.component";
 		HttpClientModule,
 		BrowserAnimationsModule,
 	],
-	providers: [CookieService],
+	providers: [],
 	bootstrap: [AppComponent],
 })
 export class AppModule {

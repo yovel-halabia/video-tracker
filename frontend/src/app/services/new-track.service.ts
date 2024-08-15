@@ -42,7 +42,7 @@ export class NewTrackService {
 	}
 
 	deleteVideo(id: string) {
-		this.videos = this.videos.filter((v) => v.id !== id);
+		this.videos = this.videos.filter((v) => v.videoUrl !== id);
 		this.videosSubject.next(this.videos);
 	}
 }

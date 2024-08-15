@@ -18,7 +18,7 @@ export class NewTrackComponent {
 	resultsVideos: Video[] = [];
 	resultsVideosSubscription!: Subscription;
 	submitted: boolean = false;
-	editTrack: Track | undefined;
+	editTrack!: Track;
 
 	newTrackFormGroup = new FormGroup({
 		label: new FormControl("", [Validators.required, this.validateLabel()]),
@@ -83,18 +83,22 @@ export class NewTrackComponent {
 		this.submitted = true;
 		if (!this.newTrackFormGroup.valid) return;
 		if (this.editTrack) {
-			this.trackService.updateTrack({...this.editTrack, label: this.newTrackFormGroup.controls.label.value || "", videos: this.videos});
+			this.trackService.updateTrack({id: this.editTrack.id, label: this.newTrackFormGroup.controls.label.value!, videos: this.videos}).subscribe();
 			this.router.navigate(["/track/" + this.editTrack.id]);
-			this.trackService.calcTrackProgress(this.editTrack.id);
+			//TODO: try to avoid the line below
 			this.newTrackService.init();
 			return;
 		}
-		this.trackService.addTrack({
-			label: this.newTrackFormGroup.controls.label.value || "",
-			videos: this.videos,
-		});
-		this.newTrackService.init();
-		this.router.navigate(["/tracks"]);
+		this.trackService
+			.addTrack({
+				label: this.newTrackFormGroup.controls.label.value!,
+				imgUrl: this.videos[0].imgUrl,
+				videos: this.videos,
+			})
+			.subscribe(() => {
+				this.newTrackService.init();
+				this.router.navigate(["/tracks"]);
+			});
 	}
 
 	drop(event: CdkDragDrop<string[]>) {

@@ -2,6 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable, tap, Subject} from "rxjs";
 import {environment} from "src/environments/environment";
+import Cookie from "src/assets/utils/cookie";
 import User from "src/assets/Interfaces/User";
 
 @Injectable({
@@ -10,7 +11,7 @@ import User from "src/assets/Interfaces/User";
 export class UserService {
 	private baseUrl = environment.baseUrl + "/user";
 	public user!: User;
-	public subject = new Subject();
+	public subject = new Subject<User>();
 	constructor(private http: HttpClient) {}
 
 	public login(body: {email: string; password: string; userName?: string}): Observable<User> {
@@ -27,7 +28,7 @@ export class UserService {
 	}
 
 	public logout(): Observable<any> {
-		return this.http.get(`${this.baseUrl}/logout`, {withCredentials: true});
+		return this.http.get(`${this.baseUrl}/logout`, {withCredentials: true}).pipe(tap({error: () => Cookie.delete("accessToken")}));
 	}
 
 	public getUser(): Observable<User> {
