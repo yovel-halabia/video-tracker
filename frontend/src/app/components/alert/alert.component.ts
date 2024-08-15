@@ -5,7 +5,6 @@ import {AlertService, AlertData} from "src/app/services/alert.service";
 @Component({
 	selector: "app-alert",
 	templateUrl: "./alert.component.html",
-	styleUrls: ["./alert.component.css"],
 	animations: [
 		trigger("openClose", [
 			state("open", style({bottom: 0})),

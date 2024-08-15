@@ -10,7 +10,6 @@ import Track from "src/assets/Interfaces/Track";
 @Component({
 	selector: "app-tracks",
 	templateUrl: "./tracks.component.html",
-	styleUrls: ["./tracks.component.css"],
 })
 export class TracksComponent {
 	userName = user.userName;

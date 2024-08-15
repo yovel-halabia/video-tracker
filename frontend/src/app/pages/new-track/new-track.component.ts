@@ -11,7 +11,6 @@ import {TrackService} from "src/app/services/track.service";
 @Component({
 	selector: "app-new-track",
 	templateUrl: "./new-track.component.html",
-	styleUrls: ["./new-track.component.css"],
 })
 export class NewTrackComponent {
 	videos!: Video[];

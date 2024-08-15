@@ -7,7 +7,6 @@ import Track from "src/assets/Interfaces/Track";
 @Component({
 	selector: "app-track",
 	templateUrl: "./track.component.html",
-	styleUrls: ["./track.component.css"],
 })
 export class TrackComponent {
 	track!: Track;

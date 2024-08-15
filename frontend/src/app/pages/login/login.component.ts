@@ -7,7 +7,6 @@ import {AlertService} from "src/app/services/alert.service";
 @Component({
 	selector: "app-login",
 	templateUrl: "./login.component.html",
-	styleUrls: ["./login.component.css"],
 })
 export class LoginComponent {
 	isLogin: boolean = true;
