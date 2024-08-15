@@ -10,10 +10,16 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class AppComponent {
 	constructor(private router: Router, private userService: UserService, private cookie: CookieService) {
-		if (!cookie.get("accessToken")) {
+		if (!this.cookie.get("accessToken")) {
 			router.navigate(["/login"]);
 			return;
 		}
-		userService.getUser().subscribe({next: () => this.router.navigate(["/tracks"]), error: () => this.router.navigate(["/login"])});
+		userService.getUser().subscribe({
+			next: () => this.router.navigate(["/tracks"]),
+			error: () => {
+				this.cookie.delete("accessToken");
+				this.router.navigate(["/login"]);
+			},
+		});
 	}
 }
