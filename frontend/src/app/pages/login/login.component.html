@@ -27,18 +27,15 @@
                         
                         </span>
                         <div class="mb-10">
-                            <app-button [label]="'Sign In'" [type]="'submit'" [class]="'w-full'" [icon]="isLoading ? 'spinner' : '' "></app-button>
+                            <app-button [label]="isLogin ? 'Sign In' : 'Sign Up'" [type]="'submit'" [class]="'w-full'"
+                                [icon]="isLoading ? 'spinner' : '' "></app-button>
                         </div>
                     </form>
-                    <p class="text-base text-light-text" *ngIf="isLogin">
-                        <span class="pr-0.5">Not a member yet?</span>
+                    <p class="text-base text-light-text">
+                        <span *ngIf="!isLogin" class="pr-0.5">Not a member yet?</span>
                         <a href="javascript:void(0)" (click)="setLogin()" class="text-primary hover:underline">
-                            Sign Up
-                        </a>
-                    </p>
-                    <p class="text-base text-light-text" *ngIf="!isLogin">
-                        <a href="javascript:void(0)" (click)="setLogin()" class="text-primary hover:underline">
-                            Back to Login
+                            {{isLogin ? "Sign Up" : "Back to Login"}}
+
                         </a>
                     </p>
                 </div>
