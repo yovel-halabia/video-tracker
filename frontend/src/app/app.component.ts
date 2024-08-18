@@ -8,16 +8,16 @@ import Cookie from "src/assets/utils/cookie";
 	templateUrl: "./app.component.html",
 })
 export class AppComponent {
-	constructor(private router: Router, private userService: UserService) {
+	constructor(router: Router, userService: UserService) {
 		if (!Cookie.get("accessToken")) {
 			router.navigate(["/login"]);
 			return;
 		}
 		userService.getUser().subscribe({
-			next: () => this.router.navigate(["/tracks"]),
+			next: () => !router.url.includes("track") && router.navigate(["/tracks"]),
 			error: () => {
 				Cookie.delete("accessToken");
-				this.router.navigate(["/login"]);
+				router.navigate(["/login"]);
 			},
 		});
 	}

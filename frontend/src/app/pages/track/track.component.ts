@@ -13,15 +13,18 @@ export class TrackComponent {
 
 	constructor(private trackService: TrackService, private activeroute: ActivatedRoute, private router: Router) {
 		const id = Number(this.activeroute.snapshot.params["id"]);
-		const matchTrack = trackService.tracks.find((t) => t.id === id);
-		if (!matchTrack) {
+		const matchTrack = trackService.tracks?.find((t) => t.id === id);
+		if (!matchTrack && trackService.tracks) {
 			this.router.navigate(["/tracks"]);
 			return;
 		}
-		this.track = matchTrack;
+		this.track = matchTrack!;
 		this.trackService.subject.subscribe((v) => {
-			const matchTrack = v.find((t) => t.id === this.track.id);
-			if (!matchTrack) return;
+			const matchTrack = v.find((t) => t.id === id);
+			if (!matchTrack) {
+				this.router.navigate(["/tracks"]);
+				return;
+			} 
 			this.track = matchTrack;
 		});
 	}
