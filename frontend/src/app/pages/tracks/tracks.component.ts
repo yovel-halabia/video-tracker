@@ -9,13 +9,15 @@ import Track from "src/assets/Interfaces/Track";
 	templateUrl: "./tracks.component.html",
 })
 export class TracksComponent {
-	userName = "my user name";
+	userName = "";
 	tracks: Track[];
 	showMore: boolean = false;
 
 	constructor(private trackService: TrackService, private userService: UserService, private router: Router) {
+		this.userName = this.userService.user?.userName || "";
 		this.tracks = trackService.tracks;
 		this.trackService.subject.subscribe((v) => (this.tracks = v));
+		this.userService.subject.subscribe((v) => (this.userName = v.userName));
 	}
 
 	setShowMore(): void {
