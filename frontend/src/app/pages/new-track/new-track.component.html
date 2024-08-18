@@ -23,22 +23,20 @@
                                 <app-input [formRefference]="formGroup" [name]="'search'"
                                     [placeholder]="'Search Video'"
                                     [showErr]="formGroup.controls.search.errors && submitted ? 'You must have at least 1 video' : ''"></app-input>
-                                <table *ngIf="resultsVideos.length"
-                                    class="absolute bg-white w-full table-auto border-separate border-spacing-y-3">
-                                    <tbody>
-                                        <tr *ngFor="let video of resultsVideos" (click)="addVideo(video)"
-                                            class="outline-stroke outline mb-2 bg-white flex justify-between cursor-pointer">
-                                            <td class="py-5 px-2 text-center text-base font-medium">
-                                                <div class="flex items-center text-primary-text">
-                                                    <div class="w-24 bg-center aspect-video mr-3"
-                                                        [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+video.imgUrl+') center'}">
-                                                    </div>
-                                                    {{video.title}}
+                                <div *ngIf="resultsVideos.length"
+                                    class="w-full shadow-md rounded-md flex-1 overflow-hidden mt-[2px] outline outline-white absolute bg-white h-[35vh]">
+                                    <div class="h-full p-5 overflow-y-auto">
+                                        <div *ngFor="let video of resultsVideos" (click)="addVideo(video)"
+                                            class="border-stroke border mb-2 p-3 bg-white flex items-center justify-between cursor-pointer">
+                                            <div class="flex items-center">
+                                                <div class="w-24 min-w-24 bg-center aspect-video mr-3"
+                                                    [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+video.imgUrl+') center'}">
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                <span>{{video.title}}</span>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            </div>
                             </div>
 
                             <table class="w-full table-auto border-separate border-spacing-y-3">
