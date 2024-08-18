@@ -25,7 +25,7 @@ To setup local environment:<br/>
 Clone the repository to your local machine<br/><br/>
 Open the project in the IDE and run the following command in terminal:<br/>
 `cd frontend`<br/>
-`ng serve`
+`ng serve`<br/>
 Open another terminal window and run th follwing command:<br/>
 `cd backend`<br/>
 `dotnet watch run`<br/><br/>
