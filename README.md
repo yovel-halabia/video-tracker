@@ -9,9 +9,9 @@ This project is Video Tracker website you can create list with videos and track 
 
 ## Features
 * Authentication:<br/>
-can login/signup using net core identity service and jwt service<br/>
+Can login/signup using net core identity service and jwt service<br/>
 * 3 party integration - YouTube services:<br/>
-can search youtube videos and add them to track using Google.YouTube.Service <br/>
+Can search youtube videos and add them to track using Google.YouTube.Service <br/>
 * Track your videos:<br/>
 -- Remember last video you saw and exact time.<br/>
 -- Mark as seen video you finish watch.<br/>
