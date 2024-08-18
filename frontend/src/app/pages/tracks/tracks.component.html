@@ -1,4 +1,4 @@
-<section class="min-h-screen bg-gray-1 flex justify-center items-center">
+<section class="min-h-screen bg-gray-1 flex justify-center items-center px-3">
     <div class="container">
         <h3 class="text-3xl text-primary-text font-semibold mb-3">{{userName}} Tracks</h3>
         <div class="pl-3 relative">
@@ -19,13 +19,13 @@
                 <table class="w-full table-auto border-separate border-spacing-y-3">
                     <thead>
                         <tr class="text-center">
-                            <th class="font-medium text-primary-text text-base w-2/6 min-w-[160px] py-4 px-3  ">
+                            <th class="font-medium text-primary-text text-base w-2/6 min-w-[160px] sm:min-w-[auto] py-4 sm:py-2 px-3  sm:px-3">
                                 Track
                             </th>
-                            <th class="font-medium text-primary-text text-base	w-1/6 min-w-[160px] py-4 px-3  ">
+                            <th class="font-medium text-primary-text text-base	w-1/6 min-w-[160px] sm:min-w-[auto] py-4 sm:py-2 px-3  sm:px-3">
                                 Progress
                             </th>
-                            <th class="font-medium text-primary-text text-base	w-1/12 min-w-[160px] py-4 px-3 ">
+                            <th class="font-medium text-primary-text text-base	w-1/12 min-w-[160px] sm:min-w-[auto] py-4 sm:py-2 px-3 sm:px-3">
                                 Remove
                             </th>
                         </tr>
@@ -35,7 +35,7 @@
                             <td class="py-5 px-2 text-center text-base font-medium">
                                 <a [routerLink]="'/track/' + track.id">
                                     <div class="flex items-center text-primary-text">
-                                        <div class="w-24 bg-center aspect-video mr-3"
+                                        <div class="w-24 sm:w-12 bg-center aspect-video mr-3"
                                             [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+track.imgUrl+') center'}">
                                         </div>
                                         {{track.label}}

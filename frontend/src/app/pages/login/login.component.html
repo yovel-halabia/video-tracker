@@ -1,9 +1,9 @@
-<section class="min-h-screen bg-gray-1 flex justify-center items-center">
+<section class="min-h-screen bg-gray-1 flex justify-center items-center w-[100vw]">
     <div class="container">
         <div class="flex flex-wrap -mx-4">
             <div class="w-full px-4">
                 <div
-                    class="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px] ">
+                    class="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center ">
                     <div class="mb-10 text-center md:mb-16">
                         <span class="text-5xl text-primary font-bold">Video Tracker</span>
                     </div>
@@ -32,7 +32,7 @@
                         </div>
                     </form>
                     <p class="text-base text-light-text">
-                        <span *ngIf="!isLogin" class="pr-0.5">Not a member yet?</span>
+                        <span *ngIf="!isLogin" class="pr-0.5 sm:block">Not a member yet?</span>
                         <a href="javascript:void(0)" (click)="setLogin()" class="text-primary hover:underline">
                             {{isLogin ? "Sign Up" : "Back to Login"}}
 

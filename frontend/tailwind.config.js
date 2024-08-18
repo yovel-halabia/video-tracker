@@ -14,6 +14,10 @@ module.exports = {
 			"primary-text": "#111928",
 			stroke: "#DFE4EA",
 		},
+		screens: {
+			sm: {max: "600px"},
+			md: {max: "768px"},
+		},
 	},
 	plugins: [],
 };

@@ -1,8 +1,8 @@
-<section class="min-h-screen bg-gray-1 flex justify-center items-center">
-    <div class="container">
+<section class="min-h-screen bg-gray-1 flex justify-center items-center sm:px-3">
+    <div class="container ">
         <h3 class="text-3xl text-primary-text font-semibold mb-3">New Track</h3>
         <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
-            <form [formGroup]="formGroup" (submit)="onSubmit()" class="px-40">
+            <form [formGroup]="formGroup" (submit)="onSubmit()" class="px-40 sm:px-0">
                 <ol class="space-y-3">
                     <li class="text-body-color dark:text-dark-6 flex items-center text-base">
                         <span
@@ -29,7 +29,7 @@
                                         <div *ngFor="let video of resultsVideos" (click)="addVideo(video)"
                                             class="border-stroke border mb-2 p-3 bg-white flex items-center justify-between cursor-pointer">
                                             <div class="flex items-center">
-                                                <div class="w-24 min-w-24 bg-center aspect-video mr-3"
+                                                <div class="w-24 min-w-24 sm:w-12 sm:min-w-12 bg-center aspect-video mr-3"
                                                     [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+video.imgUrl+') center'}">
                                                 </div>
                                                 <span>{{video.title}}</span>
@@ -44,7 +44,7 @@
                                     <tr cdkDrag LockAxis="y" *ngFor="let video of videos"
                                         class="outline-stroke outline mb-2 bg-white flex justify-between">
                                         <td class="py-5 px-2 text-center text-base font-medium">
-                                            <div class="flex items-center text-primary-text">
+                                            <div class="flex items-center text-primary-text sm:flex-col">
                                                 <div class="w-24 bg-center aspect-video mr-3"
                                                     [ngStyle]="{background:'linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) ,url('+video.imgUrl+') center'}">
                                                 </div>
