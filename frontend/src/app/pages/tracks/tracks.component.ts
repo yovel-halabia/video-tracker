@@ -15,7 +15,7 @@ export class TracksComponent {
 
 	constructor(private trackService: TrackService, private userService: UserService, private router: Router) {
 		this.userName = this.userService.user?.userName || "";
-		this.tracks = trackService.tracks;
+		this.tracks = trackService.tracks || [];
 		this.trackService.subject.subscribe((v) => (this.tracks = v));
 		this.userService.subject.subscribe((v) => (this.userName = v.userName));
 	}
@@ -31,6 +31,10 @@ export class TracksComponent {
 				this.router.navigate(["/login"]);
 			},
 		});
+	}
+
+	onClickOutSide(): void {
+		this.showMore = false;
 	}
 
 	DeleteTrack(trackId: number) {

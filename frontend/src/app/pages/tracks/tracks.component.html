@@ -1,10 +1,10 @@
 <section class="min-h-screen bg-gray-1 flex justify-center items-center px-3">
     <div class="container">
         <h3 class="text-3xl text-primary-text font-semibold mb-3">{{userName}} Tracks</h3>
-        <div class="pl-3 relative">
+        <div class="pl-3 relative inline-block" appClickedOutside (clickedOutside)="onClickOutSide()">
             <fa-icon (click)="setShowMore()" [icon]="'ellipsis'" size="2x" class="cursor-pointer"></fa-icon>
             <div *ngIf="showMore" class="rounded-md bg-white border-stroke border p-3 absolute mt-[-8px]">
-                <div (click)="logOut()" class="cursor-pointer">
+                <div (click)="logOut()" class="cursor-pointer flex whitespace-nowrap">
                     <fa-icon [icon]="'sign-out'"></fa-icon>
                     <span class="ml-2">Log Out</span>
                 </div>
