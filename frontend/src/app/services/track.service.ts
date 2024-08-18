@@ -17,6 +17,7 @@ export class TrackService {
 	public subject = new Subject<Track[]>();
 
 	constructor(private userService: UserService, private http: HttpClient, private alertService: AlertService) {
+		this.tracks = userService.user?.tracks;
 		this.userService.subject.subscribe((user) => {
 			this.tracks = user.tracks;
 			this.subject.next(this.tracks);
