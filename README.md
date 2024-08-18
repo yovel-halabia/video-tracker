@@ -8,15 +8,15 @@ This project is Video Tracker website you can create list with videos and track 
 ![Skills](https://skillicons.dev/icons?i=js,html,css,cs,angular,dotnet)
 
 ## Features
--- Authentication:<br/>
-  can login/signup using net core identity service and jwt service<br/>
--- 3 party integration - YouTube services:<br/>
-  can search youtube videos and add them to track using Google.YouTube.Service <br/>
--- Track your videos:<br/>
-* Remember last video you saw and exact time.
-* Mark as seen video you finish watch.
-* Auto next to next video in the list.
--- Optimistic update:<br/>
+* Authentication:<br/>
+can login/signup using net core identity service and jwt service<br/>
+* 3 party integration - YouTube services:<br/>
+can search youtube videos and add them to track using Google.YouTube.Service <br/>
+* Track your videos:<br/>
+-- Remember last video you saw and exact time.<br/>
+-- Mark as seen video you finish watch.<br/>
+-- Auto next to next video in the list.<br/>
+* Optimistic update:<br/>
   Instead waiting results from API any changes user do (except for create new track and login/register)
   appears immediately in the frontend שnd at the same time request sent to the server for an update.
 
