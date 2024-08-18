@@ -2,15 +2,15 @@
     <div class="container">
         <h3 class="text-3xl text-primary-text font-semibold mb-3">New Track</h3>
         <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
-            <form [formGroup]="newTrackFormGroup" (submit)="onSubmit()" class="px-40">
+            <form [formGroup]="formGroup" (submit)="onSubmit()" class="px-40">
                 <ol class="space-y-3">
                     <li class="text-body-color dark:text-dark-6 flex items-center text-base">
                         <span
                             class="bg-primary mr-2.5 flex h-[26px] w-full max-w-[26px] items-center justify-center rounded-full text-base text-white">
                             1
                         </span>
-                        <app-input [formRefference]="newTrackFormGroup" [name]="'label'" [placeholder]="'Track Name'"
-                            [showErr]="newTrackFormGroup.controls.label.errors && submitted ? newTrackFormGroup.controls.label.errors['required'] ? 'Track Name is required' : newTrackFormGroup.controls.label.errors['nameExist'] && '&quot;' + newTrackFormGroup.controls.label.errors['nameExist'] + '&quot; is already exist' : '' ">
+                        <app-input [formRefference]="formGroup" [name]="'label'" [placeholder]="'Track Name'"
+                            [showErr]="formGroup.controls.label.errors && submitted ? formGroup.controls.label.errors['required'] ? 'Track Name is required' : formGroup.controls.label.errors['nameExist'] && '&quot;' + formGroup.controls.label.errors['nameExist'] + '&quot; is already exist' : '' ">
                         </app-input>
                     </li>
                     <li class="text-body-color dark:text-dark-6 flex items-center text-base">
@@ -20,9 +20,9 @@
                         </span>
                         <div class="container mx-auto rounded-md bg-white border-stroke border p-3">
                             <div class="relative" appClickedOutside (clickedOutside)="onClickOutsideSearch()">
-                                <app-input [formRefference]="newTrackFormGroup" [name]="'search'"
+                                <app-input [formRefference]="formGroup" [name]="'search'"
                                     [placeholder]="'Search Video'"
-                                    [showErr]="newTrackFormGroup.controls.search.errors && submitted ? 'You must have at least 1 video' : ''"></app-input>
+                                    [showErr]="formGroup.controls.search.errors && submitted ? 'You must have at least 1 video' : ''"></app-input>
                                 <table *ngIf="resultsVideos.length"
                                     class="absolute bg-white w-full table-auto border-separate border-spacing-y-3">
                                     <tbody>

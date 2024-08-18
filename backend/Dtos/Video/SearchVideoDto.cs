@@ -14,5 +14,7 @@ namespace backend.Dtos.Video
         public string Title { get; set; }
         [Required]
         public string ImgUrl { get; set; }
+        public bool IsDone { get; set; } = false;
+        public int CurrentTime { get; set; } = 0;
     }
 }

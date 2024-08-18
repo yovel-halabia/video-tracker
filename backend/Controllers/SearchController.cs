@@ -52,7 +52,7 @@ namespace backend.Controllers
                 if (user == null) return Unauthorized();
                 if (user.IsSearch == true) return BadRequest(new { errors = new List<string> { "request already sent" } });
                 user.IsSearch = true;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
 
                 if (string.IsNullOrWhiteSpace(query)) return BadRequest(new { errors = new List<string> { "query must have value" } });
@@ -77,7 +77,7 @@ namespace backend.Controllers
                 }).Where(v => v.VideoUrl != null).ToList().GetRange(0, 10);
 
                 user.IsSearch = false;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return Ok(videos);
 
 
