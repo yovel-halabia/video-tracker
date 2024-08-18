@@ -9,6 +9,7 @@ export class ButtonComponent {
 	@Input() icon: string = "";
 	@Input() link: string = "";
 	@Input() type: string = "button";
+	@Input() class: string = "";
 
 	@Output() onClick = new EventEmitter();
 }

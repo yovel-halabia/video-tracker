@@ -27,8 +27,7 @@
                         
                         </span>
                         <div class="mb-10">
-                            <input type="submit" value="Sign In"
-                                class="w-full px-5 py-3 text-base font-medium text-white transition border rounded-md cursor-pointer border-primary bg-primary hover:bg-opacity-90" />
+                            <app-button [label]="'Sign In'" [type]="'submit'" [class]="'w-full'" [icon]="isLoading ? 'spinner' : '' "></app-button>
                         </div>
                     </form>
                     <p class="text-base text-light-text" *ngIf="isLogin">

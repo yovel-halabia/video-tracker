@@ -1,13 +1,16 @@
 <button *ngIf="!link" [type]="type" (click)="this.onClick.emit()"
+[ngClass]="class ? class : ''"
     class="bg-primary cursor-pointer border-primary border rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-opacity-90">
     <span class="pr-[10px]">
         <fa-icon *ngIf="icon === 'plus'" [icon]="'plus'"></fa-icon>
+        <fa-icon *ngIf="icon === 'spinner'" [icon]="'circle-notch'" [spin]="true"></fa-icon>
     </span>
     {{label}}
 </button>
 
 
 <a *ngIf="link" [routerLink]="link"
+[ngClass]="class ? class : ''"
     class="bg-primary cursor-pointer border-primary border rounded-md inline-flex items-center justify-center py-3 px-7 text-center text-base font-medium text-white hover:bg-opacity-90">
     <span class="pr-[10px]">
         <fa-icon *ngIf="icon === 'plus'" [icon]="'plus'"></fa-icon>

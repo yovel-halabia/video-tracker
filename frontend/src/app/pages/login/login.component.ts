@@ -12,6 +12,7 @@ export class LoginComponent {
 	isLogin: boolean = true;
 	submitted: boolean = false;
 	errMssg: string = "";
+	isLoading = false;
 	loginFormGroup = new FormGroup({
 		userName: new FormControl(""),
 		email: new FormControl("", [Validators.required, Validators.email]),
@@ -32,8 +33,12 @@ export class LoginComponent {
 	}
 
 	onSubmit(): void {
+		this.isLoading = true;
 		this.submitted = true;
-		if (!this.loginFormGroup.valid) return;
+		if (!this.loginFormGroup.valid) {
+			this.isLoading = false;
+			return;
+		}
 
 		const body = {
 			email: this.loginFormGroup.value.email!,
@@ -44,6 +49,7 @@ export class LoginComponent {
 		this.userService.login(body).subscribe({
 			next: () => this.router.navigate(["/tracks"]),
 			error: (err) => {
+				this.isLoading = false;
 				if (err.status !== 400 && err.status !== 401) {
 					this.alertService.show({content: err.error});
 					return;
