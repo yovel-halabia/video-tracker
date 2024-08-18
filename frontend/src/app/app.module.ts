@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FontAwesomeModule, FaIconLibrary} from "@fortawesome/angular-fontawesome";
-import {faPlus, faTrashCan, faGripLines, faCheck, faPen, faXmark, faEllipsis, faSignOut} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faTrashCan, faGripLines, faCheck, faPen, faXmark, faEllipsis, faSignOut, faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 import {YouTubePlayerModule} from "@angular/youtube-player";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {HttpClientModule} from "@angular/common/http";
@@ -46,6 +46,6 @@ import {AlertComponent} from "./components/alert/alert.component";
 })
 export class AppModule {
 	constructor(libary: FaIconLibrary) {
-		libary.addIcons(faPlus, faTrashCan, faGripLines, faCheck, faPen, faXmark, faEllipsis, faSignOut);
+		libary.addIcons(faPlus, faTrashCan, faGripLines, faCheck, faPen, faXmark, faEllipsis, faSignOut, faCircleNotch);
 	}
 }

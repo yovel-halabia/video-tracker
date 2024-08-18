@@ -2,3 +2,6 @@
 <router-outlet>
 </router-outlet>
 <app-alert></app-alert>
+<div *ngIf="isLoading" class="w-full h-full fixed bottom-0 bg-white flex justify-center items-center">
+    <fa-icon [icon]="'circle-notch'" size="4x" [spin]="true"></fa-icon>
+</div>

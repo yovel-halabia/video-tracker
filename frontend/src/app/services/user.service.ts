@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable, tap, Subject} from "rxjs";
 import {environment} from "src/environments/environment";
-import Cookie from "src/assets/utils/cookie";
+import Cookie from "src/assets/utils/Cookie";
 import User from "src/assets/Interfaces/User";
 
 @Injectable({
@@ -11,6 +11,7 @@ import User from "src/assets/Interfaces/User";
 export class UserService {
 	private baseUrl = environment.baseUrl + "/user";
 	public user!: User;
+	public isLoading = new Subject<boolean>();
 	public subject = new Subject<User>();
 	constructor(private http: HttpClient) {}
 
@@ -32,10 +33,15 @@ export class UserService {
 	}
 
 	public getUser(): Observable<User> {
+		this.isLoading.next(true);
 		return this.http.get<User>(`${this.baseUrl}/get-user`, {withCredentials: true}).pipe(
 			tap({
 				next: (user) => {
+					this.isLoading.next(false);
 					this.addUser(user);
+				},
+				error: () => {
+					this.isLoading.next(false);
 				},
 			}),
 		);
