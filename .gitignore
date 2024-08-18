@@ -1,3 +1,4 @@
 obj/
 video-tracker.generated.sln
 .fake
+appsettings.json
