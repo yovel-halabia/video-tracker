@@ -84,6 +84,14 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ITrackRepository, TrackRepository>();
 
+if (builder.Environment.IsProduction())
+{
+    builder.Services.AddSpaStaticFiles(configuration =>
+    {
+        configuration.RootPath = Path.Combine("public");
+    });
+}
+
 var app = builder.Build();
 
 
@@ -91,6 +99,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+if (app.Environment.IsProduction())
+{
+    app.UseSpaStaticFiles();
+    app.UseSpa(spa => { });
 }
 
 app.UseCors("ClientPolicy");
