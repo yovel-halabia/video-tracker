@@ -1,9 +1,5 @@
 name: Video tracker publish
-
 on:
-  push:
-    branches:
-      - deploy
   workflow_dispatch:
 
 jobs:
