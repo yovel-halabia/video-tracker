@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
       - uses: actions/checkout@v4
@@ -20,13 +23,13 @@ jobs:
           dotnet-version: '8.x'
           
       - name: install dependencies
-        run: dotnet resotre ./backend/backend.csproj
+        run: dotnet resotre ./backend.csproj
 
       - name: build
-        run: dotnet build ./backend/backend.csproj --configuration Release --no-restore
+        run: dotnet build ./backend.csproj --configuration Release --no-restore
 
       - name: publish
-        run: dotnet publish ./backend/backend.csproj --configuration Release --output ./publish
+        run: dotnet publish ./backend.csproj --configuration Release --output ./publish
 
   deploy:
     runs-on: windows-latest
