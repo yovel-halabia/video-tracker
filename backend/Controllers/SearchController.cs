@@ -76,6 +76,7 @@ namespace backend.Controllers
                     };
                 }).Where(v => v.VideoUrl != null).ToList().GetRange(0, 10);
 
+                user = await _context.Users.Where(u => u.Email == decodedToken.Email).FirstOrDefaultAsync();
                 user.IsSearch = false;
                 await _context.SaveChangesAsync();
                 return Ok(videos);
