@@ -15,13 +15,17 @@ export class AppComponent {
 			router.navigate(["/login"]);
 			return;
 		}
+		this.isLoading = true;
 		userService.getUser().subscribe({
-			next: () => !router.url.includes("track") && router.navigate(["/tracks"]),
+			next: () => {
+				if (!router.url.includes("track")) router.navigate(["/tracks"]);
+				this.isLoading = false;
+			},
 			error: () => {
 				Cookie.delete("accessToken");
 				router.navigate(["/login"]);
+				this.isLoading = false;
 			},
 		});
-		userService.isLoading.subscribe((v) => (this.isLoading = v));
 	}
 }
