@@ -34,7 +34,7 @@ export class TrackService {
 		const prevTracks = this.tracks;
 		this.tracks = this.tracks.filter((t) => t.id !== trackId);
 		this.subject.next(this.tracks);
-		return this.http.get(`${this.baseUrl}/delete/${trackId}`, HttpOptions).pipe(
+		return this.http.get(`${this.baseUrl}/delete/${trackId}`, HttpOptions()).pipe(
 			tap({
 				error: (err) => {
 					this.alertService.show(err.error);
@@ -51,7 +51,7 @@ export class TrackService {
 		this.tracks[index] = {...this.tracks[index], ...updates, progress: this.calcProgress(this.tracks[index]) || this.tracks[index].progress};
 		this.subject.next(this.tracks);
 
-		return this.http.post(`${this.baseUrl}/edit`, updates, HttpOptions).pipe(
+		return this.http.post(`${this.baseUrl}/edit`, updates, HttpOptions()).pipe(
 			tap({
 				error: (err) => {
 					this.alertService.show(err.error);
@@ -72,7 +72,7 @@ export class TrackService {
 		const progress = this.calcProgress(this.tracks[trackIndex]);
 		if (progress !== null) this.updateTrack({id: this.tracks[trackIndex].id, progress}).subscribe();
 
-		return this.http.post(`${this.baseUrl}/edit-video`, updates, HttpOptions).pipe(
+		return this.http.post(`${this.baseUrl}/edit-video`, updates, HttpOptions()).pipe(
 			tap({
 				error: (err) => {
 					this.alertService.show(err.error);
@@ -84,7 +84,7 @@ export class TrackService {
 	}
 
 	addTrack(body: {label: string; imgUrl: string; videos: Video[]}): Observable<number> {
-		return this.http.post<number>(`${this.baseUrl}/add`, body, HttpOptions).pipe(
+		return this.http.post<number>(`${this.baseUrl}/add`, body, HttpOptions()).pipe(
 			tap({
 				next: (trackId) => {
 					const track: Track = {

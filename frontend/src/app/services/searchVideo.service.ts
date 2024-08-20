@@ -12,6 +12,6 @@ export class SearchVideoService {
 	private baseUrl = environment.baseUrl + "/search";
 	constructor(private http: HttpClient) {}
 	searchForVideo(query: string): Observable<Video[]> {
-		return this.http.get<Video[]>(`${this.baseUrl}?query=${query}`, HttpOptions);
+		return this.http.get<Video[]>(`${this.baseUrl}?query=${query}`, HttpOptions());
 	}
 }
