@@ -2,7 +2,7 @@
 
 
 ## General Information
-link to demo [link](https://video-tracker-h5b9btffcwcndrdd.eastus-01.azurewebsites.net/)
+link to demo [link](https://video-tracker-h5b9btffcwcndrdd.eastus-01.azurewebsites.net/)<br/>
 This project is Video Tracker website you can create list with videos and track your watching progress.
 
 ## Technologies Used
