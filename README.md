@@ -20,6 +20,9 @@ Can search youtube videos and add them to track using Google.YouTube.Service <br
   Instead waiting results from API any changes user do (except for create new track and login/register)
   appears immediately in the frontend שnd at the same time request sent to the server for an update.
 
+## Data Architecture
+![data](https://ibb.co/jzQKTMS)
+
 ## Setup
 To setup local environment:<br/>
 Clone the repository to your local machine<br/><br/>
