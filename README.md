@@ -2,6 +2,7 @@
 
 
 ## General Information
+Link to website [link](https://video-tracker-h5b9btffcwcndrdd.eastus-01.azurewebsites.net/)<br/>
 This project is Video Tracker website you can create list with videos and track your watching progress.
 
 ## Technologies Used
@@ -19,6 +20,11 @@ Can search youtube videos and add them to track using Google.YouTube.Service <br
 * Optimistic update:<br/>
   Instead waiting results from API any changes user do (except for create new track and login/register)
   appears immediately in the frontend שnd at the same time request sent to the server for an update.
+
+## Data Architecture
+![data](https://i.ibb.co/JBzt2Z3/Untitled-1-1.jpg)
+
+
 
 ## Setup
 To setup local environment:<br/>
