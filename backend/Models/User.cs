@@ -8,7 +8,6 @@ namespace backend.Models
 {
     public class User : IdentityUser
     {
-        public bool IsSearch { get; set; } = false;
         public List<Track> Tracks { get; set; } = new List<Track>();
     }
 }

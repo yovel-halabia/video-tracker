@@ -45,16 +45,6 @@ namespace backend.Controllers
         {
             try
             {
-                var accessToken = HttpContext.Request.Headers.First(h => h.Key == "Authorization").Value;
-                var decodedToken = _tokenService.DecodeToken(accessToken);
-                if (decodedToken == null) return Unauthorized();
-                var user = await _context.Users.Where(u => u.Email == decodedToken.Email).FirstOrDefaultAsync();
-                if (user == null) return Unauthorized();
-                if (user.IsSearch == true) return BadRequest(new { errors = new List<string> { "request already sent" } });
-                user.IsSearch = true;
-                await _context.SaveChangesAsync();
-
-
                 if (string.IsNullOrWhiteSpace(query)) return BadRequest(new { errors = new List<string> { "query must have value" } });
                 var youtubeService = new YouTubeService(new BaseClientService.Initializer()
                 {
@@ -75,10 +65,6 @@ namespace backend.Controllers
                         ImgUrl = item.Snippet.Thumbnails.Default__.Url
                     };
                 }).Where(v => v.VideoUrl != null).ToList().GetRange(0, 10);
-
-                user = await _context.Users.Where(u => u.Email == decodedToken.Email).FirstOrDefaultAsync();
-                user.IsSearch = false;
-                await _context.SaveChangesAsync();
                 return Ok(videos);
 
 

@@ -45,10 +45,14 @@ namespace backend.Controllers
                 if (createUser.Succeeded)
                 {
                     var addRole = await _userManager.AddToRoleAsync(user, "User");
-                    if (addRole.Succeeded) return Ok(new UserDto
+                    if (addRole.Succeeded)
                     {
-                        UserName = user.UserName,
-                    });
+                        HttpContext.Response.Cookies.Append("accessToken", _tokenService.CreateToken(user));
+                        return Ok(new UserDto
+                        {
+                            UserName = user.UserName,
+                        });
+                    }
                     return StatusCode(500);
 
                 }
