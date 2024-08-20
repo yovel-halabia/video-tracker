@@ -1,5 +1,6 @@
 video-tracker.generated.sln
 .fake
+.env
 
 
 # Visual Studio Code
