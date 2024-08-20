@@ -88,7 +88,7 @@ if (builder.Environment.IsProduction())
 {
     builder.Services.AddSpaStaticFiles(configuration =>
     {
-        configuration.RootPath = Path.Combine("public");
+        configuration.RootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "dist");
     });
 }
 
@@ -101,11 +101,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-if (app.Environment.IsProduction())
-{
-    app.UseSpaStaticFiles();
-    app.UseSpa(spa => { });
-}
 
 app.UseCors("ClientPolicy");
 
@@ -115,5 +110,18 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (app.Environment.IsProduction())
+{
+    var spaStaticFileOptions = new StaticFileOptions
+    {
+        FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "dist"))
+    };
+    app.UseSpaStaticFiles(spaStaticFileOptions);
+    app.UseSpa(spa =>
+    {
+        spa.Options.DefaultPageStaticFileOptions = spaStaticFileOptions;
+    });
+}
 
 app.Run();
