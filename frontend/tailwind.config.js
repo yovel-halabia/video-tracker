@@ -17,6 +17,7 @@ module.exports = {
 		screens: {
 			sm: {max: "600px"},
 			md: {max: "768px"},
+			lg: {max: "1000px"},
 		},
 	},
 	plugins: [],

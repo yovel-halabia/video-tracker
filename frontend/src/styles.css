@@ -6,7 +6,15 @@ body{
 }
 
 youtube-player iframe{
-    width: 100%;
-    height: unset;
+    width: unset;
+    height: 100%;
     aspect-ratio: 16 / 9;
+    margin: auto;
 }
+
+@media only screen and (max-width: 1000px) {
+    youtube-player iframe {
+        width: 70%;
+        height: unset;
+    }
+  }
