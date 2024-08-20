@@ -21,7 +21,7 @@ Can search youtube videos and add them to track using Google.YouTube.Service <br
   appears immediately in the frontend שnd at the same time request sent to the server for an update.
 
 ## Data Architecture
-![data](https://i.ibb.co/bFChPBk/672f9ab01d80ebac5f60686d6881b0a5.jpg)
+![data](https://i.ibb.co/2Fr2QDq/data-arch-1-1.jpg)
 
 ## Setup
 To setup local environment:<br/>
