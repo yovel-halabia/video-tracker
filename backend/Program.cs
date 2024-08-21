@@ -11,7 +11,6 @@ using Microsoft.OpenApi.Models;
 using dotenv.net;
 
 DotEnv.Load();
-var _env = DotEnv.Read();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDBContext>(options=>{
-    options.UseSqlServer(builder.Environment.IsProduction() ? _env["DEFAULT_CONNECTION"] : builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Environment.IsProduction() ? System.Environment.GetEnvironmentVariable("DEFAULT_CONNECTION") : builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -49,7 +48,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = builder.Configuration["JWT:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(_env["SIGNING_KEY"])
+            System.Text.Encoding.UTF8.GetBytes(System.Environment.GetEnvironmentVariable("SIGNING_KEY"))
         )
     };
 });

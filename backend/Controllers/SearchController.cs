@@ -28,12 +28,11 @@ namespace backend.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly IConfiguration _config;
         private readonly ITokenService _tokenService;
         private readonly ApplicationDBContext _context;
-        public SearchController(IConfiguration config, ITokenService tokenService, ApplicationDBContext context)
+        public SearchController(ITokenService tokenService, ApplicationDBContext context)
         {
-            _config = config;
+            Console.WriteLine(System.Environment.GetEnvironmentVariable("YT_API_KEY"));
             _tokenService = tokenService;
             _context = context;
         }
@@ -48,7 +47,7 @@ namespace backend.Controllers
                 if (string.IsNullOrWhiteSpace(query)) return BadRequest(new { errors = new List<string> { "query must have value" } });
                 var youtubeService = new YouTubeService(new BaseClientService.Initializer()
                 {
-                    ApiKey = _config["YouTube:ApiKey"],
+                    ApiKey = System.Environment.GetEnvironmentVariable("YT_API_KEY"),
                     ApplicationName = this.GetType().ToString()
                 });
                 var searchListRequest = youtubeService.Search.List("snippet");
