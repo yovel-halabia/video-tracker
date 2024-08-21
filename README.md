@@ -24,7 +24,8 @@ Can search youtube videos and add them to track using Google.YouTube.Service <br
 ## Data Architecture
 ![data](https://i.ibb.co/JBzt2Z3/Untitled-1-1.jpg)
 
-
+## Api document
+![api](https://i.ibb.co/Y0R31Nm/V-Api-Documentation-210824-074915-1.jpg)
 
 ## Setup
 To setup local environment:<br/>
@@ -40,7 +41,10 @@ server=localhost<br/>
 port=1433<br/>
 User ID=SA<br/>
 Password=Dev@1234<br/>
-TrustServerCertificate=True<br/>
+TrustServerCertificate=True<br/></br>
+Create .env file in backend directory with following properties:<br/>
+SIGNING_KEY={{put here which genereted key you want}}
+YT_API_KEY={put here Google api key with youtub api allowed}}
 
 ## Contact
 Created by [@yovel_halabia](https://www.linkedin.com/in/yovel-halabia-450a2b1b2/)
