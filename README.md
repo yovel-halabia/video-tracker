@@ -45,7 +45,7 @@ Password=Dev@1234<br/>
 TrustServerCertificate=True<br/></br>
 Create .env file in backend directory with following properties:<br/>
 SIGNING_KEY={{put here which genereted key you want}}<br/>
-YT_API_KEY={put here Google api key with youtub api allowed}}
+YT_API_KEY={{put here Google api key with youtub api allowed}}
 
 ## Contact
 Created by [@yovel_halabia](https://www.linkedin.com/in/yovel-halabia-450a2b1b2/)
